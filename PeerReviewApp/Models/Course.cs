@@ -7,6 +7,6 @@
         public int InstutionId { get; set; }
         public int InstructorId { get; set; }
         public string Term { get; set; }
-        IList<int> Students { get; set; }
+        IList<AppUser> Students { get; set; }
     }
 }
