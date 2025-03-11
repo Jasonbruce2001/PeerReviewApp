@@ -11,8 +11,11 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-public DbSet<Institution> Institution { get; set; } = default!;
+    public DbSet<Institution> Institution { get; set; } = default!;
     
     // one DbSet for each domain model class
-    // public DbSet<Review> Reviews { get; set; }
+    public DbSet<Review> Reviews { get; set; }
+    public DbSet<Course> Courses { get; set; }
+
+public DbSet<PeerReviewApp.Models.Assignmnet> Assignmnet { get; set; } = default!;
 }
