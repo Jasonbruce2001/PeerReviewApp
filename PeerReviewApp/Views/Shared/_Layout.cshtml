@@ -35,7 +35,7 @@
                     @if (signInManager.IsSignedIn(User))
                     {
                         <li class="nav-item">
-                            <form method="post" asp-action="Logout" asp-controller="RegisterVm">
+                            <form method="post" asp-action="Logout" asp-controller="AppUser">
                                 <span class="text-dark LogOut">@User.Identity.Name</span>
                                 <input type="submit" value="Log Out" class="btn btn-outline-dark"/>
                             </form>
@@ -46,12 +46,12 @@
                         // Get current action
                         var action = ViewContext.RouteData.Values["action"]?.ToString();
                         // anonymous user - Register link and Log In button
-                        <li class="nav-item">
-                            <a class="btn btn-outline-dark register" asp-controller="RegisterVm" asp-action="Register">
+                        <li class="nav-item me-3">
+                            <a class="btn btn-outline-dark register" asp-controller="AppUser" asp-action="Register">
                                 <span class="fas fa-edit"></span> &nbsp; Register </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-dark" asp-action="LogIn" asp-controller="RegisterVm">
+                            <a class="btn btn-outline-dark" asp-controller="AppUser" asp-action="LogIn">
                                 Log In
                             </a>
                         </li>
