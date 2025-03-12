@@ -10,22 +10,22 @@ using PeerReviewApp.Models;
 
 namespace PeerReviewApp.Controllers
 {
-    public class AssignmentController : Controller
+    public class DocumentController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AssignmentController(ApplicationDbContext context)
+        public DocumentController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Assignment
+        // GET: Document
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Assignments.ToListAsync());
+            return View(await _context.Document.ToListAsync());
         }
 
-        // GET: Assignment/Details/5
+        // GET: Document/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (assignment == null)
+            var document = await _context.Document
+                .FirstOrDefaultAsync(m => m.DocumentId == id);
+            if (document == null)
             {
                 return NotFound();
             }
 
-            return View(assignment);
+            return View(document);
         }
 
-        // GET: Assignment/Create
+        // GET: Document/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Assignment/Create
+        // POST: Document/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CourseId,DueDate,Title,Description,FilePath")] Assignment assignment)
+        public async Task<IActionResult> Create([Bind("DocumentId,FilePath")] Document document)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(assignment);
+                _context.Add(document);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(assignment);
+            return View(document);
         }
 
-        // GET: Assignment/Edit/5
+        // GET: Document/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments.FindAsync(id);
-            if (assignment == null)
+            var document = await _context.Document.FindAsync(id);
+            if (document == null)
             {
                 return NotFound();
             }
-            return View(assignment);
+            return View(document);
         }
 
-        // POST: Assignment/Edit/5
+        // POST: Document/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CourseId,DueDate,Title,Description,FilePath")] Assignment assignment)
+        public async Task<IActionResult> Edit(int id, [Bind("DocumentId,FilePath")] Document document)
         {
-            if (id != assignment.Id)
+            if (id != document.DocumentId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace PeerReviewApp.Controllers
             {
                 try
                 {
-                    _context.Update(assignment);
+                    _context.Update(document);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AssignmentExists(assignment.Id))
+                    if (!DocumentExists(document.DocumentId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace PeerReviewApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(assignment);
+            return View(document);
         }
 
-        // GET: Assignment/Delete/5
+        // GET: Document/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (assignment == null)
+            var document = await _context.Document
+                .FirstOrDefaultAsync(m => m.DocumentId == id);
+            if (document == null)
             {
                 return NotFound();
             }
 
-            return View(assignment);
+            return View(document);
         }
 
-        // POST: Assignment/Delete/5
+        // POST: Document/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var assignment = await _context.Assignments.FindAsync(id);
-            if (assignment != null)
+            var document = await _context.Document.FindAsync(id);
+            if (document != null)
             {
-                _context.Assignments.Remove(assignment);
+                _context.Document.Remove(document);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AssignmentExists(int id)
+        private bool DocumentExists(int id)
         {
-            return _context.Assignments.Any(e => e.Id == id);
+            return _context.Document.Any(e => e.DocumentId == id);
         }
     }
 }

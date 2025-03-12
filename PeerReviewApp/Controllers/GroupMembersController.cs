@@ -10,22 +10,22 @@ using PeerReviewApp.Models;
 
 namespace PeerReviewApp.Controllers
 {
-    public class InstitutionAdminController : Controller
+    public class GroupMembersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public InstitutionAdminController(ApplicationDbContext context)
+        public GroupMembersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Institution
+        // GET: GroupMembers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Institution.ToListAsync());
+            return View(await _context.GroupMembers.ToListAsync());
         }
 
-        // GET: Institution/Details/5
+        // GET: GroupMembers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var institution = await _context.Institution
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (institution == null)
+            var groupMembers = await _context.GroupMembers
+                .FirstOrDefaultAsync(m => m.GroupMembersId == id);
+            if (groupMembers == null)
             {
                 return NotFound();
             }
 
-            return View(institution);
+            return View(groupMembers);
         }
 
-        // GET: Institution/Create
+        // GET: GroupMembers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Institution/Create
+        // POST: GroupMembers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Institution institution)
+        public async Task<IActionResult> Create([Bind("GroupMembersId")] GroupMembers groupMembers)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(institution);
+                _context.Add(groupMembers);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(institution);
+            return View(groupMembers);
         }
 
-        // GET: Institution/Edit/5
+        // GET: GroupMembers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var institution = await _context.Institution.FindAsync(id);
-            if (institution == null)
+            var groupMembers = await _context.GroupMembers.FindAsync(id);
+            if (groupMembers == null)
             {
                 return NotFound();
             }
-            return View(institution);
+            return View(groupMembers);
         }
 
-        // POST: Institution/Edit/5
+        // POST: GroupMembers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Institution institution)
+        public async Task<IActionResult> Edit(int id, [Bind("GroupMembersId")] GroupMembers groupMembers)
         {
-            if (id != institution.Id)
+            if (id != groupMembers.GroupMembersId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace PeerReviewApp.Controllers
             {
                 try
                 {
-                    _context.Update(institution);
+                    _context.Update(groupMembers);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InstitutionExists(institution.Id))
+                    if (!GroupMembersExists(groupMembers.GroupMembersId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace PeerReviewApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(institution);
+            return View(groupMembers);
         }
 
-        // GET: Institution/Delete/5
+        // GET: GroupMembers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var institution = await _context.Institution
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (institution == null)
+            var groupMembers = await _context.GroupMembers
+                .FirstOrDefaultAsync(m => m.GroupMembersId == id);
+            if (groupMembers == null)
             {
                 return NotFound();
             }
 
-            return View(institution);
+            return View(groupMembers);
         }
 
-        // POST: Institution/Delete/5
+        // POST: GroupMembers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var institution = await _context.Institution.FindAsync(id);
-            if (institution != null)
+            var groupMembers = await _context.GroupMembers.FindAsync(id);
+            if (groupMembers != null)
             {
-                _context.Institution.Remove(institution);
+                _context.GroupMembers.Remove(groupMembers);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool InstitutionExists(int id)
+        private bool GroupMembersExists(int id)
         {
-            return _context.Institution.Any(e => e.Id == id);
+            return _context.GroupMembers.Any(e => e.GroupMembersId == id);
         }
     }
 }

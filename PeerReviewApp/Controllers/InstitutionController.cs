@@ -10,22 +10,22 @@ using PeerReviewApp.Models;
 
 namespace PeerReviewApp.Controllers
 {
-    public class AssignmentController : Controller
+    public class InstitutionController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AssignmentController(ApplicationDbContext context)
+        public InstitutionController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Assignment
+        // GET: Institution
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Assignments.ToListAsync());
+            return View(await _context.Institution.ToListAsync());
         }
 
-        // GET: Assignment/Details/5
+        // GET: Institution/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments
+            var institution = await _context.Institution
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (assignment == null)
+            if (institution == null)
             {
                 return NotFound();
             }
 
-            return View(assignment);
+            return View(institution);
         }
 
-        // GET: Assignment/Create
+        // GET: Institution/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Assignment/Create
+        // POST: Institution/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CourseId,DueDate,Title,Description,FilePath")] Assignment assignment)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Institution institution)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(assignment);
+                _context.Add(institution);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(assignment);
+            return View(institution);
         }
 
-        // GET: Assignment/Edit/5
+        // GET: Institution/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments.FindAsync(id);
-            if (assignment == null)
+            var institution = await _context.Institution.FindAsync(id);
+            if (institution == null)
             {
                 return NotFound();
             }
-            return View(assignment);
+            return View(institution);
         }
 
-        // POST: Assignment/Edit/5
+        // POST: Institution/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CourseId,DueDate,Title,Description,FilePath")] Assignment assignment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Institution institution)
         {
-            if (id != assignment.Id)
+            if (id != institution.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace PeerReviewApp.Controllers
             {
                 try
                 {
-                    _context.Update(assignment);
+                    _context.Update(institution);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AssignmentExists(assignment.Id))
+                    if (!InstitutionExists(institution.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace PeerReviewApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(assignment);
+            return View(institution);
         }
 
-        // GET: Assignment/Delete/5
+        // GET: Institution/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments
+            var institution = await _context.Institution
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (assignment == null)
+            if (institution == null)
             {
                 return NotFound();
             }
 
-            return View(assignment);
+            return View(institution);
         }
 
-        // POST: Assignment/Delete/5
+        // POST: Institution/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var assignment = await _context.Assignments.FindAsync(id);
-            if (assignment != null)
+            var institution = await _context.Institution.FindAsync(id);
+            if (institution != null)
             {
-                _context.Assignments.Remove(assignment);
+                _context.Institution.Remove(institution);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AssignmentExists(int id)
+        private bool InstitutionExists(int id)
         {
-            return _context.Assignments.Any(e => e.Id == id);
+            return _context.Institution.Any(e => e.Id == id);
         }
     }
 }

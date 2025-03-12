@@ -10,22 +10,22 @@ using PeerReviewApp.Models;
 
 namespace PeerReviewApp.Controllers
 {
-    public class AssignmentController : Controller
+    public class ReviewController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AssignmentController(ApplicationDbContext context)
+        public ReviewController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Assignment
+        // GET: Review
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Assignments.ToListAsync());
+            return View(await _context.Reviews.ToListAsync());
         }
 
-        // GET: Assignment/Details/5
+        // GET: Review/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments
+            var review = await _context.Reviews
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (assignment == null)
+            if (review == null)
             {
                 return NotFound();
             }
 
-            return View(assignment);
+            return View(review);
         }
 
-        // GET: Assignment/Create
+        // GET: Review/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Assignment/Create
+        // POST: Review/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CourseId,DueDate,Title,Description,FilePath")] Assignment assignment)
+        public async Task<IActionResult> Create([Bind("Id,AssignmentId")] Review review)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(assignment);
+                _context.Add(review);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(assignment);
+            return View(review);
         }
 
-        // GET: Assignment/Edit/5
+        // GET: Review/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments.FindAsync(id);
-            if (assignment == null)
+            var review = await _context.Reviews.FindAsync(id);
+            if (review == null)
             {
                 return NotFound();
             }
-            return View(assignment);
+            return View(review);
         }
 
-        // POST: Assignment/Edit/5
+        // POST: Review/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CourseId,DueDate,Title,Description,FilePath")] Assignment assignment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AssignmentId")] Review review)
         {
-            if (id != assignment.Id)
+            if (id != review.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace PeerReviewApp.Controllers
             {
                 try
                 {
-                    _context.Update(assignment);
+                    _context.Update(review);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AssignmentExists(assignment.Id))
+                    if (!ReviewExists(review.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace PeerReviewApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(assignment);
+            return View(review);
         }
 
-        // GET: Assignment/Delete/5
+        // GET: Review/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments
+            var review = await _context.Reviews
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (assignment == null)
+            if (review == null)
             {
                 return NotFound();
             }
 
-            return View(assignment);
+            return View(review);
         }
 
-        // POST: Assignment/Delete/5
+        // POST: Review/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var assignment = await _context.Assignments.FindAsync(id);
-            if (assignment != null)
+            var review = await _context.Reviews.FindAsync(id);
+            if (review != null)
             {
-                _context.Assignments.Remove(assignment);
+                _context.Reviews.Remove(review);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AssignmentExists(int id)
+        private bool ReviewExists(int id)
         {
-            return _context.Assignments.Any(e => e.Id == id);
+            return _context.Reviews.Any(e => e.Id == id);
         }
     }
 }
