@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PeerReviewApp.Models;
 
 namespace PeerReviewApp.Controllers;
@@ -27,7 +28,8 @@ public class AppUserController : Controller
         if (ModelState.IsValid)
         {
             DateTime date = DateTime.Now;
-            var user = new AppUser() { UserName = model.Username, AccountAge = date};
+            
+            var user = new AppUser() { UserName = model.Username, AccountAge = date, Email = model.Email, InstructorCode = model.InstructorCode};
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)

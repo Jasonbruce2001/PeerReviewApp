@@ -4,6 +4,10 @@ namespace PeerReviewApp.Models;
 
 public class RegisterVm
 {
+    [Required(ErrorMessage = "Email is required.")]
+    [StringLength(255)]
+    public string Email { get; set; } = string.Empty;
+    
     [Required(ErrorMessage = "Username is required.")]
     [StringLength(255)]
     public string Username { get; set; } = string.Empty;
@@ -17,4 +21,9 @@ public class RegisterVm
     [DataType(DataType.Password)]
     [Display(Name = "Confirm password")]
     public string ConfirmPassword { get; set; } = string.Empty;
+    
+    [Display(Name = "Instructor Code")]
+    [MinLength(6, ErrorMessage = "Invalid Instructor Code.")]
+    [StringLength(6)]
+    public string? InstructorCode { get; set; } = string.Empty;
 }
