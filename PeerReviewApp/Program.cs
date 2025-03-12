@@ -47,4 +47,21 @@ using (var scope = app.Services.CreateScope())
     await SeedData.CreateAdminUser(scope.ServiceProvider);
 }
 
+
+// Create roles if they don't exist - added in program.cs for simplicity, ideally it should be in apuusercontroller to test if roles exist prior to assigning them
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    string[] roleNames = { "Admin", "Instructor", "Student" };
+
+    foreach (var roleName in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+}
+
 app.Run();

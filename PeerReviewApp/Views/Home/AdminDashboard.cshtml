@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container">
+    <h1 class="mt-4 mb-4">Administrator Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Institutions</h5>
+                    <p class="card-text">Add, edit, or remove educational institutions.</p>
+                    <a asp-controller="Institution" asp-action="Index" class="btn btn-primary">Go to Institutions</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Courses</h5>
+                    <p class="card-text">Create and manage courses across all institutions.</p>
+                    <a asp-controller="Courses" asp-action="Index" class="btn btn-primary">Go to Courses</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Users</h5>
+                    <p class="card-text">View and manage user accounts.</p>
+                    <a href="#" class="btn btn-primary">User Management</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Review Assignments</h5>
+                    <p class="card-text">View all assignments across courses.</p>
+                    <a asp-controller="Assignment" asp-action="Index" class="btn btn-primary">All Assignments</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Groups</h5>
+                    <p class="card-text">Create and manage student groups.</p>
+                    <a asp-controller="Group" asp-action="Index" class="btn btn-primary">Groups</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Review System</h5>
+                    <p class="card-text">Manage the peer review system.</p>
+                    <a asp-controller="Review" asp-action="Index" class="btn btn-primary">Reviews</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

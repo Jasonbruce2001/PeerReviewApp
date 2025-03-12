@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<div class="container">
+    <h1 class="mt-4 mb-4">Student Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">My Courses</h5>
+                    <p class="card-text">View your enrolled courses.</p>
+                    <a asp-controller="Courses" asp-action="StudentCourses" class="btn btn-primary">View Courses</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Assignments</h5>
+                    <p class="card-text">View and submit assignments.</p>
+                    <a asp-controller="Assignment" asp-action="StudentAssignments" class="btn btn-primary">View Assignments</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">My Groups</h5>
+                    <p class="card-text">View your group memberships.</p>
+                    <a asp-controller="Group" asp-action="StudentGroups" class="btn btn-primary">My Groups</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Peer Reviews</h5>
+                    <p class="card-text">Complete peer reviews assigned to you.</p>
+                    <a asp-controller="Review" asp-action="StudentReviews" class="btn btn-primary">My Reviews</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">My Grades</h5>
+                    <p class="card-text">View your grades and feedback.</p>
+                    <a asp-controller="Grade" asp-action="StudentGrades" class="btn btn-primary">My Grades</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
