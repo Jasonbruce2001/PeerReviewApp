@@ -21,14 +21,28 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                </ul>
+                <!-- NavBar Start -->
+                @if (User.IsInRole("Student"))
+                {<!-- Student NavBar -->
+                    
+                } else if (User.IsInRole("Instructor"))
+                {<!-- Instructor NavBar -->
+                    
+                } else if (User.IsInRole("Admin"))
+                {<!-- Admin NavBar -->
+                    
+                }
+                else
+                { <!-- Guest NavBar -->
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                }
 
                 <!-- Log-in/log-out -->
                 <ul class="nav navbar navbar-right">

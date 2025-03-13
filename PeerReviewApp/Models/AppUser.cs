@@ -7,7 +7,7 @@ namespace PeerReviewApp.Models
         {
             [NotMapped]
             public IList<string> RoleNames { get; set; } = null!;
-
+            public string? InstructorCode { get; set; }
             public DateTime AccountAge { get; set; }
         }
 }

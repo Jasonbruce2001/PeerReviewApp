@@ -5,6 +5,10 @@ using System.Collections.Generic;
 namespace PeerReviewApp.Models;
 public class RegisterVm
 {
+    [Required(ErrorMessage = "Email is required.")]
+    [StringLength(255)]
+    public string Email { get; set; } = string.Empty;
+    
     [Required(ErrorMessage = "Username is required.")]
     [StringLength(255)]
     public string Username { get; set; } = string.Empty;
@@ -18,17 +22,9 @@ public class RegisterVm
     [DataType(DataType.Password)]
     [Display(Name = "Confirm password")]
     public string ConfirmPassword { get; set; } = string.Empty;
-
-    [Required(ErrorMessage = "Please select a role.")]
-    [Display(Name = "Role")]
-    public string SelectedRole { get; set; } = string.Empty;
-
-    // This property will provide the dropdown options
-    public List<SelectListItem> AvailableRoles { get; set; } = new List<SelectListItem>
-    {
-        new SelectListItem { Value = "Student", Text = "Student" },
-        new SelectListItem { Value = "Instructor", Text = "Instructor" }
-        // You can add Admin here too if you want it selectable during registration
-        // new SelectListItem { Value = "Admin", Text = "Administrator" }
-    };
+    
+    [Display(Name = "Instructor Code")]
+    [MinLength(6, ErrorMessage = "Invalid Instructor Code.")]
+    [StringLength(6)]
+    public string? InstructorCode { get; set; } = string.Empty;
 }

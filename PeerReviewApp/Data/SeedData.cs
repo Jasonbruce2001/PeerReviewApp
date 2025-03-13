@@ -38,6 +38,7 @@ public class SeedData
             serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         
         string username = "Administrator"; 
+        string email = "admin@admin.com";
         string password = "Pass1234!"; 
         string roleName = "Admin";
         DateTime date = DateTime.Now;
@@ -50,7 +51,7 @@ public class SeedData
         // if username doesn't exist, create it and add it to role
         if (await userManager.FindByNameAsync(username) == null) 
         { 
-            AppUser user = new AppUser { UserName = username, AccountAge = date}; 
+            AppUser user = new AppUser { UserName = username, AccountAge = date, Email = email, InstructorCode = null}; 
             var result = await userManager.CreateAsync(user, password); 
             if (result.Succeeded) {
                 await userManager.AddToRoleAsync(user, roleName); 
