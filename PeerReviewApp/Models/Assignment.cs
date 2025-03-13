@@ -1,6 +1,6 @@
 namespace PeerReviewApp.Models;
 
-public class Assignmnet
+public class Assignment
 {
     public int Id { get; set; }
     public string CourseId { get; set; }
