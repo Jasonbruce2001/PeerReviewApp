@@ -11,6 +11,5 @@ namespace PeerReviewApp.Models
         public Group Group { get; set; } //This won't be an error when merged with other branches
 
         public AppUser Member { get; set; }
-
     }
 }

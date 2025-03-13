@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PeerReviewApp.Data;
 
-public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+public class ApplicationDbContext : IdentityDbContext<AppUser>
 {
     // constructor just calls the base class constructor
     public ApplicationDbContext(
