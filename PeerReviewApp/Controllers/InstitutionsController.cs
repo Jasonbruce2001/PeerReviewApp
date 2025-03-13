@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,22 +10,22 @@ using PeerReviewApp.Models;
 
 namespace PeerReviewApp.Controllers
 {
-    public class InstitutionController : Controller
+    public class InstitutionsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public InstitutionController(ApplicationDbContext context)
+        public InstitutionsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Institution
+        // GET: Institutions
         public async Task<IActionResult> Index()
         {
             return View(await _context.Institution.ToListAsync());
         }
 
-        // GET: Institution/Details/5
+        // GET: Institutions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,13 +43,13 @@ namespace PeerReviewApp.Controllers
             return View(institution);
         }
 
-        // GET: Institution/Create
+        // GET: Institutions/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Institution/Create
+        // POST: Institutions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -65,7 +65,7 @@ namespace PeerReviewApp.Controllers
             return View(institution);
         }
 
-        // GET: Institution/Edit/5
+        // GET: Institutions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,7 +81,7 @@ namespace PeerReviewApp.Controllers
             return View(institution);
         }
 
-        // POST: Institution/Edit/5
+        // POST: Institutions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -116,7 +116,7 @@ namespace PeerReviewApp.Controllers
             return View(institution);
         }
 
-        // GET: Institution/Delete/5
+        // GET: Institutions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +134,7 @@ namespace PeerReviewApp.Controllers
             return View(institution);
         }
 
-        // POST: Institution/Delete/5
+        // POST: Institutions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

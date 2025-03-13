@@ -36,6 +36,7 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
         // Configure many-to-many relationship between Course and Student
         modelBuilder.Entity<Course>()
             .HasMany(c => c.Students)
-            .WithMany();
+            .WithMany()
+            .UsingEntity(j => j.ToTable("CourseStudent"));
     }
 }

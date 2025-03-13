@@ -1,4 +1,4 @@
-@model PeerReviewApp.Models.Course
+﻿@model PeerReviewApp.Models.Course
 
 @{
     ViewData["Title"] = "Delete";
@@ -18,10 +18,10 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.InstutionId)
+            @Html.DisplayNameFor(model => model.Instructor)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.InstutionId)
+            @Html.DisplayFor(model => model.Instructor.Id)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Term)

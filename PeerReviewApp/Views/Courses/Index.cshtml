@@ -1,4 +1,4 @@
-@model IEnumerable<PeerReviewApp.Models.Course>
+﻿@model IEnumerable<PeerReviewApp.Models.Course>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InstutionId)
+                @Html.DisplayNameFor(model => model.Instructor)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Term)
@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.InstutionId)
+                @Html.DisplayFor(modelItem => item.Instructor.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Term)

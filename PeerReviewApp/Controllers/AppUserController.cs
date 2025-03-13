@@ -10,10 +10,10 @@ public class AppUserController : Controller
 {
     private readonly UserManager<AppUser> _userManager; 
     private readonly SignInManager<AppUser> _signInManager;
-    
+
     public AppUserController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr)
     {
-        _userManager = userMngr; _signInManager = signInMngr;
+        _userManager = userMngr; _signInManager = signInMngr; 
     }
 
     // GET
@@ -37,34 +37,12 @@ public class AppUserController : Controller
         if (ModelState.IsValid)
         {
             DateTime date = DateTime.Now;
-            
-            var user = new AppUser() { UserName = model.Username, AccountAge = date, Email = model.Email, InstructorCode = model.InstructorCode};
-
+            var user = new AppUser() { UserName = model.Username, AccountAge = date };
             var result = await _userManager.CreateAsync(user, model.Password);
-
             if (result.Succeeded)
             {
-                // Assign the selected role to the user
-                await _userManager.AddToRoleAsync(user, model.SelectedRole);
-
-                // Sign in the user
+                // Remove role assignment code
                 await _signInManager.SignInAsync(user, isPersistent: false);
-
-                // Redirect based on the selected role
-                if (model.SelectedRole == "Instructor")
-                {
-                    return RedirectToAction("Index", "Courses");  // Instructors go to courses
-                }
-                else if (model.SelectedRole == "Student")
-                {
-                    return RedirectToAction("Index", "Assignment");  // Students go to assignments
-                }
-                else if (model.SelectedRole == "Admin")
-                {
-                    return RedirectToAction("Index", "Institution");  // Admins go to institutions
-                }
-
-                // Default fallback
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -74,18 +52,6 @@ public class AppUserController : Controller
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-        }
-
-        // If we got this far, something failed, redisplay form
-        // Make sure AvailableRoles is populated when redisplaying the form
-        if (model.AvailableRoles == null || model.AvailableRoles.Count == 0)
-        {
-            model.AvailableRoles = new List<SelectListItem>
-        {
-            new SelectListItem { Value = "Student", Text = "Student" },
-            new SelectListItem { Value = "Instructor", Text = "Instructor" }
-            // Optionally add Admin
-        };
         }
 
         return View(model);

@@ -27,4 +27,6 @@ public class RegisterVm
     [MinLength(6, ErrorMessage = "Invalid Instructor Code.")]
     [StringLength(6)]
     public string? InstructorCode { get; set; } = string.Empty;
+
+    public List<SelectListItem> AvailableRoles { get; set; } = new();
 }

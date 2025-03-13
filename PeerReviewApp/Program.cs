@@ -48,7 +48,7 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider
         .GetRequiredService<ApplicationDbContext>();
-    //SeedData.Seed(context, scope.ServiceProvider);
+    await SeedData.Seed(context, scope.ServiceProvider);
     await SeedData.CreateAdminUser(scope.ServiceProvider);
 }
 

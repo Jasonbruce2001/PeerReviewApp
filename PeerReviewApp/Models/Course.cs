@@ -8,10 +8,10 @@ namespace PeerReviewApp.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Institution Institution { get; set; }
+        public string InstructorId { get; set; }
         public virtual AppUser Instructor { get; set; }
         public string Term { get; set; }
-        public virtual ICollection<AppUser>? Students { get; set; }
+        public virtual ICollection<AppUser> Students { get; set; }
     }
 }
 
