@@ -8,6 +8,7 @@ public class SeedData
     {
         var userManager = provider
             .GetRequiredService<UserManager<AppUser>>();
+
         //only add users if there are none
         if (!userManager.Users.Any())
         {
@@ -23,6 +24,8 @@ public class SeedData
 
             AppUser testUser3 = new AppUser { UserName = "Travis", AccountAge = date };
             result = await userManager.CreateAsync(testUser3, SECRET_PASSWORD);
+
+            context.SaveChanges();
         }
 
         //Seeded Institutions 
@@ -111,12 +114,12 @@ public class SeedData
         string roleName = "Admin";
         DateTime date = DateTime.Now;
 
-      
+        // if role doesn't exist, create it
         if (await roleManager.FindByNameAsync(roleName) == null)
         {
             await roleManager.CreateAsync(new IdentityRole(roleName));
         }
-       
+        // if username doesn't exist, create it and add it to role
         if (await userManager.FindByNameAsync(username) == null)
         {
             AppUser user = new AppUser { UserName = username, AccountAge = date, Email = email };
