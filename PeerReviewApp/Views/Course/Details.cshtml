@@ -1,4 +1,4 @@
-@model PeerReviewApp.Models.Course
+﻿@model PeerReviewApp.Models.Course
 
 @{
     ViewData["Title"] = "Details";
@@ -15,6 +15,12 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Instructor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Instructor.Id)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Term)

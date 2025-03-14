@@ -1,4 +1,4 @@
-@model IEnumerable<PeerReviewApp.Models.Document>
+﻿@model IEnumerable<PeerReviewApp.Models.Document>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Uploader)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FilePath)
             </th>
             <th></th>
@@ -21,6 +24,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Uploader.Id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FilePath)
             </td>
