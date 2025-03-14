@@ -24,8 +24,9 @@ public class HomeController : Controller
             // Get the current user
             var user = await _userManager.GetUserAsync(User);
 
-            // Redirect based on role
-            if (await _userManager.IsInRoleAsync(user, "Admin"))
+            if (user != null)
+                // Redirect based on role
+                if (await _userManager.IsInRoleAsync(user, "Admin"))
             {
                 return RedirectToAction("AdminDashboard");
             }

@@ -10,22 +10,22 @@ using PeerReviewApp.Models;
 
 namespace PeerReviewApp.Controllers
 {
-    public class GroupMembersController : Controller
+    public class AssignmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public GroupMembersController(ApplicationDbContext context)
+        public AssignmentsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: GroupMembers
+        // GET: Assignments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.GroupMembers.ToListAsync());
+            return View(await _context.Assignments.ToListAsync());
         }
 
-        // GET: GroupMembers/Details/5
+        // GET: Assignments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var groupMembers = await _context.GroupMembers
-                .FirstOrDefaultAsync(m => m.GroupMembersId == id);
-            if (groupMembers == null)
+            var assignment = await _context.Assignments
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (assignment == null)
             {
                 return NotFound();
             }
 
-            return View(groupMembers);
+            return View(assignment);
         }
 
-        // GET: GroupMembers/Create
+        // GET: Assignments/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: GroupMembers/Create
+        // POST: Assignments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GroupMembersId")] GroupMembers groupMembers)
+        public async Task<IActionResult> Create([Bind("Id,CourseId,DueDate,Title,Description,FilePath")] Assignment assignment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(groupMembers);
+                _context.Add(assignment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(groupMembers);
+            return View(assignment);
         }
 
-        // GET: GroupMembers/Edit/5
+        // GET: Assignments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var groupMembers = await _context.GroupMembers.FindAsync(id);
-            if (groupMembers == null)
+            var assignment = await _context.Assignments.FindAsync(id);
+            if (assignment == null)
             {
                 return NotFound();
             }
-            return View(groupMembers);
+            return View(assignment);
         }
 
-        // POST: GroupMembers/Edit/5
+        // POST: Assignments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GroupMembersId")] GroupMembers groupMembers)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CourseId,DueDate,Title,Description,FilePath")] Assignment assignment)
         {
-            if (id != groupMembers.GroupMembersId)
+            if (id != assignment.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace PeerReviewApp.Controllers
             {
                 try
                 {
-                    _context.Update(groupMembers);
+                    _context.Update(assignment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GroupMembersExists(groupMembers.GroupMembersId))
+                    if (!AssignmentExists(assignment.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace PeerReviewApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(groupMembers);
+            return View(assignment);
         }
 
-        // GET: GroupMembers/Delete/5
+        // GET: Assignments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace PeerReviewApp.Controllers
                 return NotFound();
             }
 
-            var groupMembers = await _context.GroupMembers
-                .FirstOrDefaultAsync(m => m.GroupMembersId == id);
-            if (groupMembers == null)
+            var assignment = await _context.Assignments
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (assignment == null)
             {
                 return NotFound();
             }
 
-            return View(groupMembers);
+            return View(assignment);
         }
 
-        // POST: GroupMembers/Delete/5
+        // POST: Assignments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var groupMembers = await _context.GroupMembers.FindAsync(id);
-            if (groupMembers != null)
+            var assignment = await _context.Assignments.FindAsync(id);
+            if (assignment != null)
             {
-                _context.GroupMembers.Remove(groupMembers);
+                _context.Assignments.Remove(assignment);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GroupMembersExists(int id)
+        private bool AssignmentExists(int id)
         {
-            return _context.GroupMembers.Any(e => e.GroupMembersId == id);
+            return _context.Assignments.Any(e => e.Id == id);
         }
     }
 }
