@@ -187,6 +187,57 @@ public class SeedData
             
             context.SaveChanges();
         }
+
+        // Seed Group
+        if (!context.Group.Any())
+        {
+            context.Group.AddRange(
+                new Group
+                {
+                    Name = "Group 1",
+                    Course = context.Courses.FirstOrDefaultAsync().Result
+                },
+                new Group
+                {
+                    Name = "Group 2",
+                    Course = context.Courses.FirstOrDefaultAsync().Result
+                },
+                new Group
+                {
+                    Name = "Group 3",
+                    Course = context.Courses.FirstOrDefaultAsync().Result
+                }
+            );
+            context.SaveChanges();
+        }
+
+        // Seed GroupMembers
+        if (!context.GroupMembers.Any())
+        {
+            var user = await userManager.Users.FirstOrDefaultAsync();
+
+            if (user != null)
+            {
+                context.GroupMembers.AddRange(
+                    new GroupMembers
+                    {
+                        Group = context.Group.FindAsync(1).Result,
+                        Member = user
+                    },
+                    new GroupMembers
+                    {
+                        Group = context.Group.FindAsync(2).Result,
+                        Member = user
+                    },
+                    new GroupMembers
+                    {
+                        Group = context.Group.FindAsync(3).Result,
+                        Member = user
+                    }
+                );
+                context.SaveChanges();
+            }
+        }
     }
 
     }
