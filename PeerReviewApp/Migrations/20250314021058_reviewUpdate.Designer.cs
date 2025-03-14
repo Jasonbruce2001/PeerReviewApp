@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeerReviewApp.Data;
 
@@ -11,9 +12,11 @@ using PeerReviewApp.Data;
 namespace PeerReviewApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250314021058_reviewUpdate")]
+    partial class reviewUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -237,6 +240,10 @@ namespace PeerReviewApp.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CourseId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -248,16 +255,11 @@ namespace PeerReviewApp.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("ParentCourseId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ParentCourseId");
 
                     b.ToTable("Assignments");
                 });
@@ -402,15 +404,15 @@ namespace PeerReviewApp.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AssignmentId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("FilePath")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<int>("ParentAssignmentId")
-                        .HasColumnType("int");
 
                     b.Property<string>("RevieweeId")
                         .HasColumnType("varchar(255)");
@@ -419,8 +421,6 @@ namespace PeerReviewApp.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ParentAssignmentId");
 
                     b.HasIndex("RevieweeId");
 
@@ -487,17 +487,6 @@ namespace PeerReviewApp.Migrations
                         .HasForeignKey("CourseId");
                 });
 
-            modelBuilder.Entity("PeerReviewApp.Models.Assignment", b =>
-                {
-                    b.HasOne("PeerReviewApp.Models.Course", "ParentCourse")
-                        .WithMany()
-                        .HasForeignKey("ParentCourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParentCourse");
-                });
-
             modelBuilder.Entity("PeerReviewApp.Models.Course", b =>
                 {
                     b.HasOne("PeerReviewApp.Models.AppUser", "Instructor")
@@ -544,12 +533,6 @@ namespace PeerReviewApp.Migrations
 
             modelBuilder.Entity("PeerReviewApp.Models.Review", b =>
                 {
-                    b.HasOne("PeerReviewApp.Models.Assignment", "ParentAssignment")
-                        .WithMany()
-                        .HasForeignKey("ParentAssignmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PeerReviewApp.Models.AppUser", "Reviewee")
                         .WithMany()
                         .HasForeignKey("RevieweeId");
@@ -557,8 +540,6 @@ namespace PeerReviewApp.Migrations
                     b.HasOne("PeerReviewApp.Models.AppUser", "Reviewer")
                         .WithMany()
                         .HasForeignKey("ReviewerId");
-
-                    b.Navigation("ParentAssignment");
 
                     b.Navigation("Reviewee");
 

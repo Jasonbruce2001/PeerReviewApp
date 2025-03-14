@@ -1,31 +1,36 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PeerReviewApp.Data;
 using PeerReviewApp.Models;
 
+
 namespace PeerReviewApp.Controllers
 {
-    public class CoursesController : Controller
+    public class CourseController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private UserManager<AppUser> _userManager; 
 
-        public CoursesController(ApplicationDbContext context)
+        public CourseController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: Courses
+        // GET: Course
         public async Task<IActionResult> Index()
         {
             return View(await _context.Courses.ToListAsync());
         }
 
-        // GET: Courses/Details/5
+        // GET: Course/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,18 +48,18 @@ namespace PeerReviewApp.Controllers
             return View(course);
         }
 
-        // GET: Courses/Create
+        // GET: Course/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Courses/Create
+        // POST: Course/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,InstutionId,Term")] Course course)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Course course)
         {
             if (ModelState.IsValid)
             {
@@ -62,10 +67,11 @@ namespace PeerReviewApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(course);
         }
 
-        // GET: Courses/Edit/5
+        // GET: Course/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,12 +87,12 @@ namespace PeerReviewApp.Controllers
             return View(course);
         }
 
-        // POST: Courses/Edit/5
+        // POST: Course/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,InstutionId,Term")] Course course)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Term")] Course course)
         {
             if (id != course.Id)
             {
@@ -116,7 +122,7 @@ namespace PeerReviewApp.Controllers
             return View(course);
         }
 
-        // GET: Courses/Delete/5
+        // GET: Course/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +140,7 @@ namespace PeerReviewApp.Controllers
             return View(course);
         }
 
-        // POST: Courses/Delete/5
+        // POST: Course/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
