@@ -28,4 +28,22 @@
       <Folder Include="Data\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Courses\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Courses\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Courses\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Courses\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Courses\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Review\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Review\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Review\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Review\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Review\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Assignment\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Assignment\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Assignment\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Assignment\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Assignment\Index.cshtml" />
+    </ItemGroup>
+
 </Project>
