@@ -223,6 +223,94 @@ public class SeedData
                 );
                 context.SaveChanges();
             }
+          
+        if (!context.Courses.Any())
+        {
+            DateTime date = DateTime.Now;
+            const string SECRET_PASSWORD = "Pass!123";
+            AppUser instructor = new AppUser { UserName = "Instructor", AccountAge = date };
+            var result = userManager.CreateAsync(instructor, SECRET_PASSWORD);
+
+            Course course1 = new Course()
+            {
+                Name = "Course 1",
+                Instructor = instructor,
+                Term = "Spring"
+            };
+            
+            context.Courses.Add(course1);
+            context.SaveChanges();
+        }
+        
+        if (!context.Assignments.Any())
+        {
+            DateTime date = DateTime.Now;
+            const string SECRET_PASSWORD = "Pass!123";
+            
+            AppUser reviewer = new AppUser { UserName = "reviewer", AccountAge = date };
+            var result = userManager.CreateAsync(reviewer, SECRET_PASSWORD);
+            AppUser reviewee = new AppUser { UserName = "reviewee", AccountAge = date };
+            result = userManager.CreateAsync(reviewee, SECRET_PASSWORD);
+
+            Assignment assignment1 = new Assignment()
+            {
+                DueDate = date,
+                ParentCourse = new Course() { Name = "Course 1", Instructor = reviewer, Term = "Spring"},
+                Title = "Test Assignment",
+                Description = "Test Description",
+                FilePath = "/Assignments",
+            };
+            Assignment assignment2 = new Assignment()
+            {
+                DueDate = date,
+                ParentCourse = new Course() { Name = "Course 2", Instructor = reviewer, Term = "Spring" },
+                Title = "Test Assignment 2",
+                Description = "Test Description 2",
+                FilePath = "/Assignments",
+            };
+            Assignment assignment3 = new Assignment()
+            {
+                DueDate = date,
+                ParentCourse = new Course() { Name = "Course 3", Instructor = reviewer, Term = "Spring" },
+                Title = "Test Assignment 3",
+                Description = "Test Description 3",
+                FilePath = "/Assignments",
+            };
+
+            Review review1 = new Review()
+            {
+                ParentAssignment = assignment1,
+                Reviewee = reviewee,
+                Reviewer = reviewer,
+                DueDate = date,
+                FilePath = "/Reviews",
+            };
+            Review review2 = new Review()
+            {
+                ParentAssignment = assignment2,
+                Reviewee = reviewee,
+                Reviewer = reviewer,
+                DueDate = date,
+                FilePath = "/Reviews",
+            };
+            Review review3 = new Review()
+            {
+                ParentAssignment = assignment3,
+                Reviewee = reviewee,
+                Reviewer = reviewer,
+                DueDate = date,
+                FilePath = "/Reviews",
+            };
+            
+            context.Assignments.Add(assignment1);
+            context.Assignments.Add(assignment2);
+            context.Assignments.Add(assignment3);
+            
+            context.Reviews.Add(review1);
+            context.Reviews.Add(review2);
+            context.Reviews.Add(review3);
+            
+            context.SaveChanges();
         }
     }
 
