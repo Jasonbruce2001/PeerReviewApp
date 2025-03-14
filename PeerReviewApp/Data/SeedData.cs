@@ -1,11 +1,12 @@
 using PeerReviewApp.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace PeerReviewApp.Data;
 
 public class SeedData
 {
-    public static void Seed(ApplicationDbContext context, IServiceProvider provider)
+    public static async Task Seed(ApplicationDbContext context, IServiceProvider provider)
     {
         var userManager = provider
             .GetRequiredService<UserManager<AppUser>>();
@@ -18,7 +19,7 @@ public class SeedData
             const string SECRET_PASSWORD = "Pass!123";
             AppUser testUser1 = new AppUser { UserName = "Aiden", AccountAge = date };
             var result = userManager.CreateAsync(testUser1, SECRET_PASSWORD);
-            
+
             AppUser testUser2 = new AppUser { UserName = "Jason", AccountAge = date };
             result = userManager.CreateAsync(testUser2, SECRET_PASSWORD);
 
@@ -26,6 +27,202 @@ public class SeedData
             result = userManager.CreateAsync(testUser3, SECRET_PASSWORD);
 
             context.SaveChanges();
+        }
+
+        //Seeded Institutions 
+        if (!context.Institution.Any())
+        {
+            context.Institution.AddRange(
+                new Institution { Name = "Lane Community College" },
+                new Institution { Name = "University Of Oregon" },
+                new Institution { Name = "Linn Benton College" }
+            );
+            context.SaveChanges();
+        }
+
+        // Seed Courses
+        if (!context.Courses.Any())
+        {
+
+            var user = await userManager.Users.FirstOrDefaultAsync();
+            var institution = context.Institution.FirstOrDefault();
+            if (user != null && institution != null)
+            {
+                context.Courses.AddRange(
+                    new Course
+                    {
+                        Name = "CS 246: System Design",
+                        Instructor = user,
+                        Term = "Winter 2025"
+                    },
+                    new Course
+                    {
+                        Name = "CS 233: Programming Concepts",
+                        Instructor = user,
+                        Term = "Spring 2025"
+                    },
+                      new Course
+                      {
+                          Name = "CS 275: Database Managment",
+                          Instructor = user,
+                          Term = "Spring 2025"
+                      }
+                );
+                context.SaveChanges();
+            }
+        }
+
+        // Seed Documents
+        if (!context.Document.Any())
+        {
+            var user = await userManager.Users.FirstOrDefaultAsync();
+
+            if (user != null)
+            {
+                context.Document.AddRange(
+                    new Document
+                    {
+                        Uploader = user,
+                        FilePath = "/uploads/syllabus.pdf"
+                    },
+                    new Document
+                    {
+                        Uploader = user,
+                        FilePath = "/uploads/lecture_notes.docx"
+                    },
+                    new Document
+                    {
+                        Uploader = user,
+                        FilePath = "/uploads/assignmentInstruction.pdf"
+                    }
+                );
+                context.SaveChanges();
+            }
+        }
+
+        // Seed Assignments
+        if (!context.Assignments.Any())
+        {
+            var user = await userManager.Users.FirstOrDefaultAsync();
+
+            if (user != null)
+            {
+                context.Assignments.AddRange(
+                    new Assignment
+                    {
+                        Course = context.Courses.FindAsync(1).Result,
+                        DueDate = DateTime.Parse("11/21/2024"),
+                        Title = "Lab 1",
+                        Description = "Make a Project",
+                        FilePath = "/uploads/assignmentInstruction.pdf"
+
+                    },
+                    new Assignment
+                    {
+                        Course = context.Courses.FindAsync(1).Result,
+                        DueDate = DateTime.Parse("11/28/2024"),
+                        Title = "Lab 2",
+                        Description = "Make a Project Again",
+                        FilePath = "/uploads/assignmentInstruction2.pdf"
+
+                    },
+                    new Assignment
+                    {
+                        Course = context.Courses.FindAsync(1).Result,
+                        DueDate = DateTime.Parse("12/05/2024"),
+                        Title = "Lab 1",
+                        Description = "Make a Third Project",
+                        FilePath = "/uploads/assignmentInstruction3.pdf"
+
+                    }
+                );
+                context.SaveChanges();
+            }
+        }
+
+        // Seed Grades
+        if (!context.Grade.Any())
+        {
+            var user = await userManager.Users.FirstOrDefaultAsync();
+
+            if (user != null)
+            {
+                context.Grade.AddRange(
+                    new Grade
+                    {
+                        Student = user,
+                        Assignment = context.Assignments.Find(1),
+                        Value = 94
+
+                    },
+                    new Grade
+                    {
+                        Student = user,
+                        Assignment = context.Assignments.Find(2),
+                        Value = 81
+
+                    },
+                    new Grade
+                    {
+                        Student = user,
+                        Assignment = context.Assignments.Find(3),
+                        Value = 54
+
+                    }
+                );
+                context.SaveChanges();
+            }
+        }
+
+        // Seed Group
+        if (!context.Group.Any())
+        {
+            context.Group.AddRange(
+                new Group
+                {
+                    Name = "Group 1",
+                    Course = context.Courses.FirstOrDefaultAsync().Result
+                },
+                new Group
+                {
+                    Name = "Group 2",
+                    Course = context.Courses.FirstOrDefaultAsync().Result
+                },
+                new Group
+                {
+                    Name = "Group 3",
+                    Course = context.Courses.FirstOrDefaultAsync().Result
+                }
+            );
+            context.SaveChanges();
+        }
+
+        // Seed GroupMembers
+        if (!context.GroupMembers.Any())
+        {
+            var user = await userManager.Users.FirstOrDefaultAsync();
+
+            if (user != null)
+            {
+                context.GroupMembers.AddRange(
+                    new GroupMembers
+                    {
+                        Group = context.Group.FindAsync(1).Result,
+                        Member = user
+                    },
+                    new GroupMembers
+                    {
+                        Group = context.Group.FindAsync(2).Result,
+                        Member = user
+                    },
+                    new GroupMembers
+                    {
+                        Group = context.Group.FindAsync(3).Result,
+                        Member = user
+                    }
+                );
+                context.SaveChanges();
+            }
         }
     }
 
