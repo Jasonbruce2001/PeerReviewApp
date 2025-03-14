@@ -54,7 +54,7 @@ namespace PeerReviewApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AssignmentId")] Review review)
+        public async Task<IActionResult> Create([Bind("Id,DueDate,FilePath")] Review review)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace PeerReviewApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AssignmentId")] Review review)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DueDate,FilePath")] Review review)
         {
             if (id != review.Id)
             {
